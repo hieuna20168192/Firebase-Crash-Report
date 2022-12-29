@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "98475433077",
+    "project_id": "crash-report-c25bb",
+    "storage_bucket": "crash-report-c25bb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:98475433077:android:b7983cfe257a0c6d03ec3c",
+        "android_client_info": {
+          "package_name": "com.example.firebasecrashreport"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "98475433077-aiigvlri7lt48crv2qisbib8d4vb7603.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBo_omrEML7qsW39Y8l0OiLdabnM29Y6Q0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "98475433077-aiigvlri7lt48crv2qisbib8d4vb7603.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
