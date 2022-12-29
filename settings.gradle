@@ -5,6 +5,11 @@ pluginManagement {
         mavenCentral()
     }
 }
+
+plugins {
+    id "com.gradle.enterprise" version "3.12.1"
+}
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -12,5 +17,6 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
+
 rootProject.name = "Firebase Crash Report"
 include ':app'
