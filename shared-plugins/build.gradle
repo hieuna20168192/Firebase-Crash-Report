@@ -1,0 +1,30 @@
+plugins {
+    id 'java-gradle-plugin'
+    id 'maven-publish'
+    id 'groovy'
+}
+
+group 'com.example'
+version '1.0-SNAPSHOT'
+
+publishing {
+    repositories {
+        maven {
+            url("$buildDir/repos")
+        }
+    }
+}
+
+dependencies {
+    implementation gradleApi()
+    implementation localGroovy()
+}
+
+gradlePlugin {
+    plugins {
+        create("simplePlugin") {
+            id = "com.example.shared_plugins"
+            implementationClass = "com.example.shared_plugins.GreetingPlugin"
+        }
+    }
+}

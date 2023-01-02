@@ -3,7 +3,10 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'com.google.firebase.crashlytics'
     id 'com.google.gms.google-services'
+    id 'com.example.shared_plugins' version '1.0-SNAPSHOT'
 }
+
+apply plugin: LoggingPlugin
 
 android {
     namespace 'com.example.firebasecrashreport'
@@ -37,34 +40,35 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility Dep.javaVersion
+        targetCompatibility Dep.javaVersion
     }
     kotlinOptions {
-        jvmTarget = '1.8'
+        jvmTarget = '11'
     }
 }
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation "androidx.core:core-ktx:${Dep.coreKtx}"
     implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'com.google.android.material:material:1.7.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+
+    // Import the BoM for the Firebase platform
+    implementation platform('com.google.firebase:firebase-bom:31.1.1')
+
+    // Add the dependencies for the Crashlytics and Analytics libraries
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation 'com.google.firebase:firebase-crashlytics-ktx'
+    implementation 'com.google.firebase:firebase-analytics-ktx'
+    implementation 'com.google.firebase:firebase-crashlytics-ndk'
+
+    implementation("io.coil-kt:coil:2.2.2")
+
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
 
-    dependencies {
-        // Import the BoM for the Firebase platform
-        implementation platform('com.google.firebase:firebase-bom:31.1.1')
-
-        // Add the dependencies for the Crashlytics and Analytics libraries
-        // When using the BoM, you don't specify versions in Firebase library dependencies
-        implementation 'com.google.firebase:firebase-crashlytics-ktx'
-        implementation 'com.google.firebase:firebase-analytics-ktx'
-        implementation 'com.google.firebase:firebase-crashlytics-ndk'
-
-        implementation("io.coil-kt:coil:2.2.2")
-    }
+//    xTestImplementation "org.hamcrest:hamcrest-all:${Dep.hamcrestVersion}"
 }
