@@ -3,7 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'com.google.firebase.crashlytics'
     id 'com.google.gms.google-services'
-//    id 'com.example.shared_plugins' version '1.0-SNAPSHOT'
+    id 'com.example.shared_plugins' version '1.0-SNAPSHOT'
 }
 
 apply plugin: LoggingPlugin

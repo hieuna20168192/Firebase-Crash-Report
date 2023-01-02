@@ -22,9 +22,9 @@ dependencies {
 
 gradlePlugin {
     plugins {
-        simplePlugin {
-            id = 'com.example.shared_plugins'
-            implementationClass = 'com.example.shared_plugins.GreetingPlugin'
+        create("simplePlugin") {
+            id = "com.example.shared_plugins"
+            implementationClass = "com.example.shared_plugins.GreetingPlugin"
         }
     }
 }

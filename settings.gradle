@@ -4,9 +4,9 @@ pluginManagement {
         google()
         mavenCentral()
 
-//        maven {
-//            url("/Users/macbook/AndroidStudioProjects/FirebaseCrashReport/shared-plugins/build/repos/")
-//        }
+        maven {
+            url("/Users/macbook/AndroidStudioProjects/FirebaseCrashReport/shared-plugins/build/repos")
+        }
     }
 }
 
@@ -24,7 +24,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "Firebase Crash Report"
 include ':app'
-//include ':mathUtil'
+include ':mathUtil'
 
-includeBuild 'shared_plugins'
+includeBuild 'shared-plugins'
 
