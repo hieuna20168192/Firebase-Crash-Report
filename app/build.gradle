@@ -40,11 +40,20 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility Dep.javaVersion
-        targetCompatibility Dep.javaVersion
+        sourceCompatibility 11
+        targetCompatibility 11
     }
     kotlinOptions {
         jvmTarget = '11'
+    }
+
+    // Always show the result of every unit test when running via command line, even if it passes.
+    testOptions.unitTests {
+        includeAndroidResources = true
+        // The returnDefaultValues = true is required to keep your unit tests running as you add idling resource code to your application code.
+        returnDefaultValues = true
+
+        // ...
     }
 }
 
@@ -66,9 +75,8 @@ dependencies {
 
     implementation("io.coil-kt:coil:2.2.2")
 
-    testImplementation 'junit:junit:4.13.2'
+//    testImplementation 'junit:junit:4.13.2' // be replicated inside the shared_plugins
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
 
-//    xTestImplementation "org.hamcrest:hamcrest-all:${Dep.hamcrestVersion}"
 }
