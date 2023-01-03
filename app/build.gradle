@@ -13,6 +13,10 @@ android {
     compileSdk 32
 
     defaultConfig {
+        // Don't configure matchingFallbacks in the defaultConfig block.
+        // Instead, specify fallbacks for a given product flavor in the
+        // productFlavors block,
+//        manifestPlaceholders = [hostName: "com.example.firebasecrashreport"]
         applicationId "com.example.firebasecrashreport"
         minSdk 21
         targetSdk 32
@@ -20,6 +24,25 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        // Specifies a sorted list of flavors that the plugin can try to use from a given dimension.
+        // This tells the plugin to select the "messi" flavor when encountering a dependency that includes
+        // a "soccer" dimension.
+        // Sorted list of fallbacks for the dimension.
+        missingDimensionStrategy "soccer", "messi", "ronaldo"
+
+        // Specify a missingDimensionStrategy property for each dimension that exists in a local dependency
+        // but not in your app.
+        missingDimensionStrategy 'abi', 'x86', 'arm64'
+    }
+
+    signingConfigs {
+        release {
+            storeFile file("myreleasekey.keystore")
+            storePassword System.getenv("KSTOREPWD")
+            keyAlias "alias"
+            keyPassword System.getenv("KEYPWD")
+        }
     }
 
     buildTypes {
@@ -37,8 +60,112 @@ android {
                 strippedNativeLibsDir 'build/intermediates/stripped_native_libs/release/out/lib'
                 unstrippedNativeLibsDir 'build/intermediates/merged_native_libs/release/out/lib'
             }
+
+            signingConfig signingConfigs.release
+        }
+
+        debug {
+            applicationIdSuffix = ".debug"
+            debuggable true
+        }
+
+        /**
+         * The `initWith` property lets you copy configurations from other build types,
+         * then configure only the settings you want to change. This one copies the debug build
+         * type, and then changes the manifest placeholder and application ID.
+         */
+        staging {
+            initWith debug
+//            manifestPlaceholders = [hostName:"com.example.firebasecrashreport"]
+            applicationIdSuffix ".debugStaging"
+
+            // Specifies a sorted list of fallback build types that the plugin can try to use when a dependency
+            // does not include a "staging" build type. You may specify as many fallbacks as you like, and the
+            // plugin selects the first build type that's available in the dependency.
+            matchingFallbacks = ['debug', 'qa', 'release']
         }
     }
+
+    /**
+     *  Specifies the flavor dimensions you want to use. The order in which you list the dimensions
+     *  determines their priority, from highest to lowest,
+     *  when Gradle merges variant sources and configurations. You must assign each product flavor you
+     *  configure to one of the flavor dimensions.
+     */
+    flavorDimensions "api", "mode", "tier"
+
+    productFlavors {
+        demo {
+            dimension "tier"
+
+            // Specifies a sorted list of fallback flavors that the plugin can try
+            // to use when a dependency's matching dimension does not include a "free"
+            // flavor. Specify as many fallbacks as you like; the plugin selects the first flavor
+            // that's available in the dependency's "tier" dimension.
+            matchingFallbacks = ['demo', 'trial']
+
+            // You can override the default selection at the product flavor level
+            // by configuring another missingDimensionStrategy property for the "soccer"
+            // dimension.
+            missingDimensionStrategy "soccer", "messi"
+        }
+
+        full {
+            dimension "mode"
+        }
+
+        paid {
+            dimension "tier"
+            // Because the dependency already includes a "paid" flavor in its "tier" dimension, you don't
+            // need to provide a list of fallbacks
+            // for the "paid" flavor.
+        }
+
+        free {
+            dimension "tier"
+        }
+
+        /**
+         * Configurations in the "api" product flavors override those in "mode" flavors and the defaultConfig block.
+         * Gradle determines the priority between flavor dimensions based on the order in which they appear next to the
+         * flavorDimensions property, with the first dimension having a higher priority than the second,
+         * and so on.
+         */
+        minApi24 {
+            dimension "api"
+            minSdkVersion 24
+
+            // To ensure the target device receives the version of the app with
+            // the highest compatible API level, assign version codes in increasing
+            // value with API level.
+            versionCode 30000 + android.defaultConfig.versionCode
+            versionNameSuffix "-minApi24"
+        }
+
+        minApi23 {
+            dimension "api"
+            minSdkVersion 23
+            versionCode 20000 + android.defaultConfig.versionCode
+            versionNameSuffix "-minApi23"
+        }
+
+        minApi21 {
+            dimension "api"
+            minSdkVersion 21
+            versionCode 10000 + android.defaultConfig.versionCode
+            versionNameSuffix "-minApi21"
+        }
+    }
+
+    variantFilter { variant ->
+        def names = variant.flavors*.name
+        // To check for a certain build type, use variant.buildType.name == "<buildType>"
+        if (names.contains("minApi21") && names.contains("demo")) {
+            // Gradle ignores any variants that satisfy the conditions above.
+            setIgnore(true)
+        }
+    }
+
     compileOptions {
         sourceCompatibility 11
         targetCompatibility 11
@@ -79,4 +206,9 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
 
+    testMinApi23Implementation("com.github.bumptech.glide:glide:4.14.2")
+    testMinApi23AnnotationProcessor("com.github.bumptech.glide:compiler:4.14.2")
+
+    implementation(project(":mathUtil"))
+    implementation(project(":mylibrary"))
 }
