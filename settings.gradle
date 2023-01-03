@@ -28,3 +28,4 @@ include ':mathUtil'
 
 includeBuild 'shared-plugins'
 
+include ':mylibrary'
