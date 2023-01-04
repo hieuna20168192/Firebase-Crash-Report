@@ -12,8 +12,11 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.crashlytics.ktx.crashlytics
 import com.google.firebase.crashlytics.ktx.setCustomKeys
 import com.google.firebase.ktx.Firebase
-import org.apache.logging.log4j.Level
-import org.apache.logging.log4j.LogManager
+import org.apache.commons.beanutils.PropertyUtils
+import org.apache.commons.codec.CharEncoding
+
+//import org.apache.logging.log4j.Level
+//import org.apache.logging.log4j.LogManager
 
 const val defaultUrl = "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgqlF93eRI3eINaNzlIuwqjeC9VR1pk4YM4gc4JuxQmwtZYGxFfIjJxERkwAY2NbimkQAHCtWD2zMnG_MeffHpKtxOQGlSSdW60b24jDFY6EGKfjjaxt3GBXEBxWDOpuH--OpB-mPTZrWdLUEUh5tLHWpHQXFcY6RkSUzizPOpUlB0chhtyTk_bvsbhSA/s320/Flower%204_3__jamie%20cardoso%203D.jpg"
 
@@ -28,7 +31,10 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        LogManager.getLogger().log(Level.DEBUG, "MainActivity.onCreate() starts running")
+//        LogManager.getLogger().log(Level.DEBUG, "MainActivity.onCreate() starts running")
+
+        class Person
+        PropertyUtils.setSimpleProperty(Person(), "name", "Bart Simpson")
 
         // Obtain the FirebaseAnalytics instance.
         firebaseAnalytics = Firebase.analytics
@@ -47,5 +53,9 @@ class MainActivity : AppCompatActivity() {
         }
 
         findViewById<ImageView>(R.id.imgAvatar).load(defaultUrl)
+
+        CharEncoding().run {
+
+        }
     }
 }

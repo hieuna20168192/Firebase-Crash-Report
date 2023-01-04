@@ -24,7 +24,6 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/buildSrc" />
             <option value="$PROJECT_DIR$/mathUtil" />
-            <option value="$PROJECT_DIR$/mylibrary" />
             <option value="$PROJECT_DIR$/shared-plugins" />
           </set>
         </option>
