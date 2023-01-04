@@ -182,6 +182,17 @@ android {
 
         // ...
     }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+    }
+
+    // Take no effect?
+    configurations {
+        compileClasspath {
+            resolutionStrategy.force 'commons-codec:commons-codec:1.9'
+        }
+    }
 }
 
 dependencies {
@@ -210,5 +221,34 @@ dependencies {
     testMinApi23AnnotationProcessor("com.github.bumptech.glide:compiler:4.14.2")
 
     implementation(project(":mathUtil"))
-    implementation(project(":mylibrary"))
+//    implementation(project(":mylibrary"))
+
+    implementation 'org.apache.httpcomponents:httpclient'
+
+//    implementation ('commons-codec:commons-codec') {
+//        version {
+//            strictly '1.11'
+//        }
+//    }
+
+    constraints {
+        implementation('org.apache.httpcomponents:httpclient:4.5.4') {
+            because 'previous versions have a bug impacting this application'
+        }
+
+//        implementation('commons-codec:commons-codec:1.11') {
+//            because 'version 1.9 pulled from httpclient has bugs affecting this application'
+//        }
+    }
+
+    implementation('commons-beanutils:commons-beanutils:1.9.4') {
+        // transitive of commons-collections:3.2.2
+
+        exclude group: "commons-collections", module: "commons-collections"
+    }
+
+    implementation('com.opencsv:opencsv:4.6') {
+        // depends on 'commons-beanutils' without exclude and brings back 'commons-collections' if not exclude
+        exclude group: 'commons-collections', module: 'commons-collections'
+    }
 }

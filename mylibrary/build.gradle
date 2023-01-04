@@ -59,4 +59,17 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
+
+    implementation ('commons-codec:commons-codec:1.9') {
+        // Forcing dependencies via ExternalDependency.setForce(boolean) is deprecated and no longer
+        // recommended: forced dependencies suffer an ordering issue which can be hard do diagnose and
+        // will not work well together with other rich version constraints. You should prefer strict versions
+        // instead. If you are authoring and publishing a library, you also need to be aware that force
+        // is not published.
+//        force true
+
+        version {
+            strictly '1.9'
+        }
+    }
 }
